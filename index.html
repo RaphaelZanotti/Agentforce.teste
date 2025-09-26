@@ -40,67 +40,25 @@
     </footer>
   </main>
 
-  <!--
-    INSTRUÇÕES RÁPIDAS
-    1) Substitua the-placeholder-agentforce.js pelo caminho do script do Agentforce (hostado localmente ou CDN).
-    2) Preencha a configuração/credentials abaixo conforme sua instância.
-    3) Use o botão "Abrir Agentforce" para testar a inicialização.
-  -->
+  <script type='text/javascript'>
+	function initEmbeddedMessaging() {
+		try {
+			embeddedservice_bootstrap.settings.language = 'pt_BR'; // For example, enter 'en' or 'en-US'
 
-  <!-- Exemplo de inclusão do script do Agentforce (substitua pelo script real) -->
-  <script>
-    // === EXEMPLO DE PSEUDO-INICIALIZAÇÃO DO AGENTFORCE ===
-    // Substitua essa função pela inicialização real do Agentforce.
-    function mockAgentforceInit(config){
-      // simula objeto público do Agentforce
-      window.Agentforce = {
-        config: config,
-        open: function(opts){
-          const msg = `Agentforce aberto com: ` + JSON.stringify(opts || {});
-          appendLog(msg);
-          return Promise.resolve({opened: true});
-        },
-        sendEvent: function(name, payload){
-          appendLog(`Evento enviado: ${name} - ${JSON.stringify(payload)}`);
-        }
-      };
-      appendLog('Agentforce (mock) inicializado.');
-    }
-
-    function appendLog(txt){
-      const pre = document.getElementById('log');
-      const now = new Date().toLocaleTimeString();
-      pre.textContent = `[${now}] ` + txt + "\n" + pre.textContent;
-    }
-
-    // Inicialização automática com placeholders — altere conforme necessário
-    document.addEventListener('DOMContentLoaded', function(){
-      // exemplo de configuração que você deve substituir
-      const cfg = {
-        tenantId: 'SEU_TENANT_ID_AQUI',
-        apiKey: 'SEU_API_KEY_AQUI',
-        environment: 'sandbox' // ou 'production'
-      };
-
-      // aqui você trocaria por: var s = document.createElement('script'); s.src = 'https://cdn.agentforce.com/agentforce.min.js'; document.head.appendChild(s);
-      // e depois chamaria a inicialização real do Agentforce.
-
-      // para desenvolvimento, chamamos a função mock (apenas para testes locais)
-      mockAgentforceInit(cfg);
-
-      document.getElementById('openAgentBtn').addEventListener('click', function(){
-        const nome = document.getElementById('userName').value || 'Teste';
-        if(window.Agentforce && typeof window.Agentforce.open === 'function'){
-          window.Agentforce.open({user: nome}).then(res => {
-            appendLog('open() retornou: ' + JSON.stringify(res));
-          }).catch(err => {
-            appendLog('Erro ao abrir Agentforce: ' + err);
-          });
-        } else {
-          appendLog('Agentforce não está disponível. Verifique inclusão do script.');
-        }
-      });
-    });
-  </script>
+			embeddedservice_bootstrap.init(
+				'00D88000004lE8U',
+				'Teste_github',
+				'https://sysmaporg3000xyz--sysmapdsb1.sandbox.my.site.com/ESWTestegithub1758890427029',
+				{
+					scrt2URL: 'https://sysmaporg3000xyz--sysmapdsb1.sandbox.my.salesforce-scrt.com'
+				}
+			);
+		} catch (err) {
+			console.error('Error loading Embedded Messaging: ', err);
+		}
+	};
+</script>
+<script type='text/javascript' src='https://sysmaporg3000xyz--sysmapdsb1.sandbox.my.site.com/ESWTestegithub1758890427029/assets/js/bootstrap.min.js' onload='initEmbeddedMessaging()'></script>
+  
 </body>
 </html>
