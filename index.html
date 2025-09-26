@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Agentforce - Página de Teste</title>
+  <style>
+    :root{font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; color:#222}
+    body{margin:0;padding:24px;background:#f5f7fb}
+    .card{background:#fff;border-radius:10px;padding:18px;box-shadow:0 6px 18px rgba(20,30,50,.06);max-width:880px;margin:24px auto}
+    h1{margin:0 0 8px;font-size:20px}
+    p{margin:0 0 12px;color:#555}
+    .row{display:flex;gap:12px;align-items:center}
+    .btn{background:#0b74de;color:#fff;padding:8px 12px;border-radius:8px;border:0;cursor:pointer}
+    .input{padding:8px;border-radius:8px;border:1px solid #d7dde6;min-width:260px}
+    pre{background:#0f1720;color:#e6eef8;padding:12px;border-radius:8px;overflow:auto}
+    footer{opacity:.7;font-size:13px;margin-top:14px}
+  </style>
+</head>
+<body>
+  <main class="card">
+    <h1>Agentforce - Página de Teste</h1>
+    <p>Esta página é um exemplo mínimo para você integrar e testar o Agentforce. Substitua o placeholder do script e a inicialização com os valores reais da sua instância.</p>
+
+    <section style="margin-top:12px">
+      <label for="userName">Nome (teste):</label>
+      <div class="row" style="margin-top:6px">
+        <input id="userName" class="input" placeholder="Digite um nome para testar" />
+        <button id="openAgentBtn" class="btn">Abrir Agentforce</button>
+      </div>
+    </section>
+
+    <section style="margin-top:18px">
+      <h2 style="font-size:16px;margin-bottom:8px">Console de teste</h2>
+      <pre id="log" style="height:160px">Logs aparecerão aqui...</pre>
+    </section>
+
+    <footer>
+      Observação: este arquivo não contém o script real do Agentforce. Adicione o arquivo JS do Agentforce (fornecido pelo fornecedor) e inicialize-o onde indicado.
+    </footer>
+  </main>
+
+  <!--
+    INSTRUÇÕES RÁPIDAS
+    1) Substitua the-placeholder-agentforce.js pelo caminho do script do Agentforce (hostado localmente ou CDN).
+    2) Preencha a configuração/credentials abaixo conforme sua instância.
+    3) Use o botão "Abrir Agentforce" para testar a inicialização.
+  -->
+
+  <!-- Exemplo de inclusão do script do Agentforce (substitua pelo script real) -->
+  <script>
+    // === EXEMPLO DE PSEUDO-INICIALIZAÇÃO DO AGENTFORCE ===
+    // Substitua essa função pela inicialização real do Agentforce.
+    function mockAgentforceInit(config){
+      // simula objeto público do Agentforce
+      window.Agentforce = {
+        config: config,
+        open: function(opts){
+          const msg = `Agentforce aberto com: ` + JSON.stringify(opts || {});
+          appendLog(msg);
+          return Promise.resolve({opened: true});
+        },
+        sendEvent: function(name, payload){
+          appendLog(`Evento enviado: ${name} - ${JSON.stringify(payload)}`);
+        }
+      };
+      appendLog('Agentforce (mock) inicializado.');
+    }
+
+    function appendLog(txt){
+      const pre = document.getElementById('log');
+      const now = new Date().toLocaleTimeString();
+      pre.textContent = `[${now}] ` + txt + "\n" + pre.textContent;
+    }
+
+    // Inicialização automática com placeholders — altere conforme necessário
+    document.addEventListener('DOMContentLoaded', function(){
+      // exemplo de configuração que você deve substituir
+      const cfg = {
+        tenantId: 'SEU_TENANT_ID_AQUI',
+        apiKey: 'SEU_API_KEY_AQUI',
+        environment: 'sandbox' // ou 'production'
+      };
+
+      // aqui você trocaria por: var s = document.createElement('script'); s.src = 'https://cdn.agentforce.com/agentforce.min.js'; document.head.appendChild(s);
+      // e depois chamaria a inicialização real do Agentforce.
+
+      // para desenvolvimento, chamamos a função mock (apenas para testes locais)
+      mockAgentforceInit(cfg);
+
+      document.getElementById('openAgentBtn').addEventListener('click', function(){
+        const nome = document.getElementById('userName').value || 'Teste';
+        if(window.Agentforce && typeof window.Agentforce.open === 'function'){
+          window.Agentforce.open({user: nome}).then(res => {
+            appendLog('open() retornou: ' + JSON.stringify(res));
+          }).catch(err => {
+            appendLog('Erro ao abrir Agentforce: ' + err);
+          });
+        } else {
+          appendLog('Agentforce não está disponível. Verifique inclusão do script.');
+        }
+      });
+    });
+  </script>
+</body>
+</html>
